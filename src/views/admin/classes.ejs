@@ -1,0 +1,62 @@
+<div class="toolbar">
+  <div>
+    <h1>Classes</h1>
+    <p class="admin-sub"><%= classes.length %> class(es) in the studio catalogue.</p>
+  </div>
+  <a class="btn btn-sm" href="/admin/classes/new">+ New class</a>
+</div>
+<div class="table-wrap">
+  <table class="data">
+    <thead>
+      <tr>
+        <th>Class</th>
+        <th>Schedule</th>
+        <th>Booked</th>
+        <th>Price</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% classes.forEach(function(c) { %>
+      <tr>
+        <td>
+          <b style="color: #fff;"><%= c.title %></b><br/>
+          <span class="muted" style="font-size: 13px;"><%= c.trainer_name %> &middot; <%= c.level %> &middot; <%= c.duration_min %> min</span>
+        </td>
+        <td class="muted"><%= c.schedule %></td>
+        <td><%= c.booked %> / <%= c.capacity %></td>
+        <td>₹<%= Number(c.price).toLocaleString('en-IN') %></td>
+        <td>
+          <% if (c.is_active) { %>
+            <span class="badge ok">active</span>
+          <% } else { %>
+            <span class="badge warn">hidden</span>
+          <% } %>
+        </td>
+        <td>
+          <div class="row-actions">
+            <a class="btn btn-ghost btn-sm" href="/admin/classes/<%= c.id %>/edit">Edit</a>
+            <form action="/admin/classes/<%= c.id %>/toggle" method="post" style="display:inline;">
+              <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+              <button class="btn btn-ghost btn-sm"><%= c.is_active ? 'Hide' : 'Show' %></button>
+            </form>
+            <form action="/admin/classes/<%= c.id %>/delete" method="post" style="display:inline;">
+              <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+              <button class="btn btn-danger btn-sm" data-confirm="Delete <%= c.title %>? Only possible when it has no active bookings.">Delete</button>
+            </form>
+          </div>
+        </td>
+      </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</div>
+<% if (!classes.length) { %>
+<div class="empty">
+  <div style="width: 44px; height: 44px; border-radius: 12px; background: rgba(204, 255, 0, 0.08); border: 1px solid rgba(204, 255, 0, 0.25); display: inline-flex; align-items: center; justify-content: center; color: var(--volt); margin-bottom: 12px;">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+  </div>
+  <p>No classes catalogued yet. Create your first offering.</p>
+</div>
+<% } %>

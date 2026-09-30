@@ -1,0 +1,11 @@
+<div class="wrap">
+  <div class="form-card">
+    <h1>Backup codes</h1>
+    <p class="form-sub">Save these somewhere safe. Each code works <b>once</b> — use one if you ever lose access to your authenticator app.</p>
+    <div class="backup-codes">
+      <% codes.forEach(function(c) { %><code><%= c %></code><% }) %>
+    </div>
+    <button class="btn btn-ghost btn-block" data-copy="<%= codes.join('\n') %>">Copy all codes</button>
+    <p class="form-alt"><a href="/security">Done — back to security</a></p>
+  </div>
+</div>

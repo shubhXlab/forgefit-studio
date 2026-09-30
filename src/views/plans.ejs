@@ -1,0 +1,101 @@
+<section class="section" style="padding-top: 50px; padding-bottom: 50px;">
+  <div class="wrap">
+    <div class="section-head-center reveal">
+      <span class="section-kicker">Memberships & Access</span>
+      <h1 class="section-title">Invest in Uncompromising Health</h1>
+      <p class="section-subtitle">No initiation fees. No cancellation penalties. Access to every conditioning block, recovery suite, and coaching review.</p>
+    </div>
+
+    <% if (plans && plans.length) { %>
+    <div class="plans-grid stagger-group">
+      <% plans.forEach(function(p, idx) { 
+        var isFeatured = p.name.toLowerCase().includes('pro') || idx === 1;
+        var features = (p.features || '').split('\n').map(function(s){return s.trim()}).filter(Boolean);
+      %>
+      <div class="plan-card <%= isFeatured ? 'featured' : '' %>">
+        <% if (isFeatured) { %>
+          <div class="featured-pill">Most Selected Tier</div>
+        <% } %>
+
+        <h2 class="plan-name"><%= p.name %></h2>
+        <div class="plan-price-row">
+          <div class="plan-price">₹<%= Number(p.price).toLocaleString('en-IN') %></div>
+          <div class="plan-duration"><%= p.duration_days %> days membership duration</div>
+        </div>
+
+        <ul class="plan-features">
+          <% features.forEach(function(f) { %>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            <span><%= f %></span>
+          </li>
+          <% }) %>
+        </ul>
+
+        <div style="margin-top: auto;">
+          <a class="btn <%= isFeatured ? '' : 'btn-ghost' %> btn-block" href="/register">
+            <span>Select <%= p.name %></span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+          </a>
+        </div>
+      </div>
+      <% }) %>
+    </div>
+    <% } else { %>
+    <div class="form-card" style="text-align: center; max-width: 480px;">
+      <h3 style="margin-bottom: 8px;">Tiers Calibrating</h3>
+      <p class="muted">Contact concierge for custom athletic cohort packages.</p>
+    </div>
+    <% } %>
+
+    <!-- Interactive Membership FAQs -->
+    <div class="reveal" style="margin-top: 80px; max-width: 820px; margin-left: auto; margin-right: auto;">
+      <div class="section-head-center" style="margin-bottom: 36px;">
+        <span class="section-kicker">Membership Clarifications</span>
+        <h3 style="font-size: 24px; color: #fff;">Frequently Asked Questions</h3>
+      </div>
+
+      <div class="faq-list">
+        <div class="faq-item active">
+          <button type="button" class="faq-question">
+            <span>Can I freeze or pause my membership?</span>
+            <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-answer">
+            <p>Yes. All members on 90-day or annual plans can freeze their account for up to 30 days per calendar year with zero fee via the member dashboard or front-desk concierge.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button type="button" class="faq-question">
+            <span>Are recovery thermal suites included in every plan?</span>
+            <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-answer">
+            <p>All memberships include access to the Finnish dry cedar saunas and cold plunge pool. The Biometric Pro and Private tiers also include Normatec dynamic air compression therapy and monthly DEXA body composition scans.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button type="button" class="faq-question">
+            <span>What is the cancellation and renewal policy?</span>
+            <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-answer">
+            <p>We do not believe in predatory retention contracts or hidden initiation fees. You may cancel your renewal anytime with one click in your account settings prior to the next billing date.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button type="button" class="faq-question">
+            <span>Can I book a session if I am a beginner?</span>
+            <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-answer">
+            <p>Every cohort is coach-led with designated progressions and regressions for each movement pattern. You will undergo a complimentary 20-minute movement screen prior to your first session.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

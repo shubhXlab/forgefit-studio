@@ -1,0 +1,27 @@
+{
+  "name": "forgefit-studio",
+  "version": "1.0.0",
+  "description": "ForgeFit Studio — fitness studio website with full auth (OTP, 2FA), member area and admin dashboard.",
+  "main": "src/index.js",
+  "type": "commonjs",
+  "private": true,
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "start": "node src/index.js",
+    "seed:admin": "node scripts/seed-admin.js",
+    "seed:catalog": "node scripts/seed-catalog.js",
+    "migrate:mysql": "node scripts/migrate-to-mysql.js"
+  },
+  "dependencies": {
+    "ejs": "^3.1.10",
+    "express": "^4.21.2",
+    "express-ejs-layouts": "^2.5.1",
+    "express-session": "^1.18.1",
+    "helmet": "^8.0.0",
+    "multer": "^1.4.5-lts.1",
+    "nodemailer": "^6.10.0",
+    "sync-mysql": "^3.0.1"
+  }
+}

@@ -1,0 +1,82 @@
+<div class="toolbar">
+  <div>
+    <h1>Members</h1>
+    <p class="admin-sub"><%= members.length %> account(s)<%= q ? ` matching “${q}”` : '' %>.</p>
+  </div>
+  <form class="search-form" action="/admin/members" method="get">
+    <input name="q" placeholder="Search name, email, phone…" value="<%= q %>" />
+    <button class="btn btn-ghost btn-sm">Search</button>
+  </form>
+</div>
+<div class="table-wrap">
+  <table class="data">
+    <thead>
+      <tr>
+        <th>Member</th>
+        <th>Phone</th>
+        <th>Role</th>
+        <th>Verified</th>
+        <th>2FA</th>
+        <th>Joined</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% members.forEach(function(m) { %>
+      <tr>
+        <td>
+          <span class="avatar-sm"><%= m.name.charAt(0).toUpperCase() %></span>
+          <b style="color: #fff;"><%= m.name %></b><br/>
+          <span class="muted" style="font-size: 13px; margin-left: 42px;"><%= m.email %></span>
+        </td>
+        <td class="muted"><%= m.phone %></td>
+        <td><span class="badge <%= m.role === 'admin' ? 'info' : '' %>"><%= m.role %></span></td>
+        <td>
+          <% if (m.email_verified_at) { %>
+            <span class="badge ok">verified</span>
+          <% } else { %>
+            <span class="badge warn">pending</span>
+          <% } %>
+        </td>
+        <td>
+          <% if (m.totp_enabled) { %><span class="badge ok">app</span><% } %>
+          <% if (m.email_2fa) { %><span class="badge info">email</span><% } %>
+          <% if (!m.totp_enabled && !m.email_2fa) { %><span class="muted">—</span><% } %>
+        </td>
+        <td class="muted"><%= new Date(m.created_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }) %></td>
+        <td>
+          <div class="row-actions">
+            <% if (m.id !== user.id) { %>
+            <form action="/admin/members/<%= m.id %>/toggle-active" method="post" style="display:inline;">
+              <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+              <button class="btn <%= m.is_active ? 'btn-ghost' : '' %> btn-sm" data-confirm="<%= m.is_active ? 'Deactivate this account? They will be signed out.' : 'Activate this account?' %>"><%= m.is_active ? 'Deactivate' : 'Activate' %></button>
+            </form>
+            <form action="/admin/members/<%= m.id %>/role" method="post" style="display:inline;">
+              <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+              <input type="hidden" name="role" value="<%= m.role === 'admin' ? 'member' : 'admin' %>" />
+              <button class="btn btn-ghost btn-sm" data-confirm="Change <%= m.name %>'s role to <%= m.role === 'admin' ? 'member' : 'admin' %>?">Make <%= m.role === 'admin' ? 'member' : 'admin' %></button>
+            </form>
+            <% if (m.role !== 'admin') { %>
+            <form action="/admin/members/<%= m.id %>/delete" method="post" style="display:inline;">
+              <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+              <button class="btn btn-danger btn-sm" data-confirm="Permanently delete <%= m.name %> and all their bookings? This cannot be undone.">Delete</button>
+            </form>
+            <% } %>
+            <% } else { %>
+              <span class="muted" style="font-size: 13px;">Current Session</span>
+            <% } %>
+          </div>
+        </td>
+      </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</div>
+<% if (!members.length) { %>
+<div class="empty">
+  <div style="width: 44px; height: 44px; border-radius: 12px; background: rgba(204, 255, 0, 0.08); border: 1px solid rgba(204, 255, 0, 0.25); display: inline-flex; align-items: center; justify-content: center; color: var(--volt); margin-bottom: 12px;">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+  </div>
+  <p>No members found.</p>
+</div>
+<% } %>

@@ -1,0 +1,86 @@
+<section class="section" style="padding-top: 50px; padding-bottom: 50px;">
+  <div class="wrap">
+    <div class="section-head reveal" style="margin-bottom: 30px;">
+      <div>
+        <span class="section-kicker">Timetable & Curriculum</span>
+        <h1 class="section-title">Engineered Class Roster</h1>
+        <p class="section-subtitle">Coach-led small cohorts. Strict capacity limits. Real-time availability tracking.</p>
+      </div>
+      <div>
+        <span class="chip-glass volt" style="font-size: 13px; padding: 6px 14px;">
+          <span class="beacon-dot" style="display: inline-block; vertical-align: middle; margin-right: 6px;"></span>
+          Live Studio Availability
+        </span>
+      </div>
+    </div>
+
+    <!-- Category Filters -->
+    <div class="reveal" style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 36px;" id="filterBar">
+      <button type="button" class="btn btn-sm filter-btn active" data-filter="all">All Disciplines</button>
+      <button type="button" class="btn btn-sm btn-ghost filter-btn" data-filter="strength">Strength & Power</button>
+      <button type="button" class="btn btn-sm btn-ghost filter-btn" data-filter="hiit">Conditioning / HIIT</button>
+      <button type="button" class="btn btn-sm btn-ghost filter-btn" data-filter="recovery">Recovery & Mobility</button>
+    </div>
+
+    <% if (classes && classes.length) { %>
+    <div class="grid-3 stagger-group" id="classGrid">
+      <% classes.forEach(function(c) { 
+        var titleLower = c.title.toLowerCase();
+        var cat = 'other';
+        if (titleLower.includes('strength') || titleLower.includes('forge') || titleLower.includes('power') || titleLower.includes('lift')) cat = 'strength';
+        else if (titleLower.includes('hiit') || titleLower.includes('hyrox') || titleLower.includes('metcon') || titleLower.includes('burn')) cat = 'hiit';
+        else if (titleLower.includes('mobility') || titleLower.includes('flow') || titleLower.includes('recovery') || titleLower.includes('yoga')) cat = 'recovery';
+      %>
+      <div class="card-class" data-category="<%= cat %>">
+        <div class="card-class-media">
+          <img src="<%= c.image || '/img/class-hiit.jpg' %>" alt="<%= c.title %>" loading="lazy" />
+          <div class="card-class-overlay"></div>
+          <div class="class-chips-bar">
+            <span class="chip-glass"><%= c.level %></span>
+            <% if (c.spotsLeft <= 0) { %>
+              <span class="chip-glass" style="background: rgba(239, 68, 68, 0.15); color: #fca5a5; border-color: rgba(239, 68, 68, 0.3);">Session Full</span>
+            <% } else if (c.spotsLeft <= 5) { %>
+              <span class="chip-glass volt"><%= c.spotsLeft %> spots remaining</span>
+            <% } else { %>
+              <span class="chip-glass"><%= c.spotsLeft %> / <%= c.capacity %> spots</span>
+            <% } %>
+          </div>
+        </div>
+
+        <div class="card-class-body">
+          <h2 class="card-class-title"><%= c.title %></h2>
+          <p class="card-class-schedule">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: -2px; margin-right: 4px;"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <%= c.schedule || 'Regular weekly block' %> &middot; <%= c.duration_min %> min
+          </p>
+          
+          <div class="card-class-meta">
+            <div class="coach-tag" style="display: flex; align-items: center; gap: 8px;">
+              <% 
+                var cImg = '/img/trainer-vikram.jpg';
+                if ((c.trainer_name || '').includes('Ananya')) cImg = '/img/trainer-ananya.jpg';
+                else if ((c.trainer_name || '').includes('Kabir')) cImg = '/img/trainer-kabir.jpg';
+              %>
+              <img src="<%= cImg %>" alt="" style="width: 22px; height: 22px; border-radius: 50%; object-fit: cover; border: 1px solid var(--border-card); flex-shrink: 0;" />
+              <span>Coach: <strong><%= c.trainer_name || 'ForgeFit Faculty' %></strong></span>
+            </div>
+          </div>
+
+          <div class="card-class-foot">
+            <div class="price-tag">₹<%= Number(c.price).toLocaleString('en-IN') %> <span>/ session</span></div>
+            <a class="btn btn-sm" href="/classes/<%= c.slug %>">
+              <%= c.spotsLeft > 0 ? 'Reserve Spot' : 'View Details' %>
+            </a>
+          </div>
+        </div>
+      </div>
+      <% }) %>
+    </div>
+    <% } else { %>
+    <div class="form-card" style="text-align: center; max-width: 480px;">
+      <h3 style="margin-bottom: 8px;">No Sessions Currently Scheduled</h3>
+      <p class="muted">Timetable is updating for the upcoming cycle. Inquire via <a href="/contact" style="color:var(--volt)">Concierge</a>.</p>
+    </div>
+    <% } %>
+  </div>
+</section>

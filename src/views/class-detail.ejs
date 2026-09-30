@@ -1,0 +1,142 @@
+<section class="section" style="padding-top: 40px; padding-bottom: 50px;">
+  <div class="wrap">
+    <div class="reveal" style="margin-bottom: 24px;">
+      <a href="/classes" style="display: inline-flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 700; color: var(--text-muted);">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+        <span>Back to Class Roster</span>
+      </a>
+    </div>
+
+    <div class="detail-layout reveal">
+      <!-- Left Column: Media & Curriculum Deep-Dive -->
+      <div>
+        <div style="position: relative; border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--border-card); box-shadow: var(--shadow-card);">
+          <img class="main" src="<%= cls.image || '/img/class-hiit.jpg' %>" alt="<%= cls.title %>" style="width: 100%; aspect-ratio: 16/10; object-fit: cover;" />
+          <div style="position: absolute; bottom: 16px; left: 16px; display: flex; gap: 8px;">
+            <span class="chip-glass"><%= cls.level %></span>
+            <span class="chip-glass"><%= cls.duration_min %> Minutes</span>
+          </div>
+        </div>
+
+        <div style="background: var(--bg-card); border: 1px solid var(--border-card); border-radius: var(--radius-md); padding: 32px; margin-top: 24px; box-shadow: var(--shadow-card); backdrop-filter: blur(16px);">
+          <h2 style="font-size: 22px; margin-bottom: 14px;">Curriculum & Protocol</h2>
+          <p style="color: var(--text-muted); font-size: 15.5px; line-height: 1.7; margin-bottom: 24px;">
+            <%= cls.description || 'An intensive, coach-monitored athletic conditioning block designed to elevate metabolic threshold, strengthen foundational biomechanics, and optimize power delivery.' %>
+          </p>
+
+          <h3 style="font-size: 17px; margin-bottom: 14px; color: #fff;">Session Structure</h3>
+          <div style="display: flex; flex-direction: column; gap: 14px; margin-bottom: 28px;">
+            <div style="display: flex; gap: 14px; align-items: flex-start;">
+              <span style="background: var(--volt-subtle); color: var(--volt); font-weight: 800; font-size: 12px; padding: 4px 10px; border-radius: 6px; border: 1px solid var(--volt-border);">00-15m</span>
+              <div>
+                <strong style="color: #fff; font-size: 14.5px;">Movement Prep & Joint Decompression</strong>
+                <p style="color: var(--text-muted); font-size: 13.5px; margin-top: 3px;">Dynamic thoracic mobility, hip activation, and neural primer sets.</p>
+              </div>
+            </div>
+            <div style="display: flex; gap: 14px; align-items: flex-start;">
+              <span style="background: var(--volt-subtle); color: var(--volt); font-weight: 800; font-size: 12px; padding: 4px 10px; border-radius: 6px; border: 1px solid var(--volt-border);">15-45m</span>
+              <div>
+                <strong style="color: #fff; font-size: 14.5px;">Primary Working Block</strong>
+                <p style="color: var(--text-muted); font-size: 13.5px; margin-top: 3px;">Targeted compound lifts, high-output intervals, or plyometric power circuits with real-time coaching.</p>
+              </div>
+            </div>
+            <div style="display: flex; gap: 14px; align-items: flex-start;">
+              <span style="background: var(--volt-subtle); color: var(--volt); font-weight: 800; font-size: 12px; padding: 4px 10px; border-radius: 6px; border: 1px solid var(--volt-border);">45-60m</span>
+              <div>
+                <strong style="color: #fff; font-size: 14.5px;">Down-Regulation & Contrast Protocol</strong>
+                <p style="color: var(--text-muted); font-size: 13.5px; margin-top: 3px;">Parasympathetic box breathing, band-assisted stretching, and optional cold plunge entry.</p>
+              </div>
+            </div>
+          </div>
+
+          <h3 style="font-size: 17px; margin-bottom: 12px; color: #fff;">Equipment & Amenities</h3>
+          <p style="color: var(--text-muted); font-size: 14px; line-height: 1.6;">
+            Eleiko Olympic bars, calibrated competition plates, Woodway 4Front treadmills, Concept2 SkiErgs, complimentary chilled eucalyptus towels, and recovery shakes at the fuel bar.
+          </p>
+        </div>
+      </div>
+
+      <!-- Right Column: Sticky Reservation Panel -->
+      <div>
+        <div style="background: var(--bg-card); border: 1px solid var(--border-card); border-radius: var(--radius-lg); padding: 36px 30px; box-shadow: var(--shadow-card); position: sticky; top: 100px; backdrop-filter: blur(16px);">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <span class="chip-glass volt" style="font-size: 11px;">Cohort Session</span>
+            <div class="price-tag">₹<%= Number(cls.price).toLocaleString('en-IN') %> <span style="font-size: 12px; color: var(--text-muted);">/ seat</span></div>
+          </div>
+
+          <h1 style="font-size: 28px; margin-bottom: 12px;"><%= cls.title %></h1>
+          <% 
+            var dImg = '/img/trainer-vikram.jpg';
+            var dSpec = 'Head Coach · Functional Strength & Conditioning';
+            if ((cls.trainer_name || '').includes('Ananya')) {
+              dImg = '/img/trainer-ananya.jpg';
+              dSpec = 'HIIT, Mobility & High-Performance Conditioning';
+            } else if ((cls.trainer_name || '').includes('Kabir')) {
+              dImg = '/img/trainer-kabir.jpg';
+              dSpec = 'Yoga, Breathwork & Athletic Recovery';
+            }
+          %>
+          <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 22px; padding: 12px 14px; background: rgba(255,255,255,0.03); border: 1px solid var(--border-subtle); border-radius: 10px;">
+            <img src="<%= dImg %>" alt="<%= cls.trainer_name %>" style="width: 44px; height: 44px; border-radius: 50%; object-fit: cover; border: 1px solid var(--border-card); flex-shrink: 0;" />
+            <div>
+              <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--volt); font-weight: 700;">Facilitating Coach</div>
+              <strong style="color: #fff; font-size: 14px; display: block;"><%= cls.trainer_name || 'ForgeFit Master Coach' %></strong>
+              <div style="font-size: 12px; color: var(--text-muted);"><%= dSpec %></div>
+            </div>
+          </div>
+
+          <div class="fact-list">
+            <div class="fact">
+              <span>Schedule</span>
+              <b><%= cls.schedule || 'Weekly Blocks' %></b>
+            </div>
+            <div class="fact">
+              <span>Duration</span>
+              <b><%= cls.duration_min %> Minutes</b>
+            </div>
+            <div class="fact">
+              <span>Skill Level</span>
+              <b><%= cls.level %></b>
+            </div>
+            <div class="fact">
+              <span>Availability</span>
+              <b><%= cls.spotsLeft %> / <%= cls.capacity %> Available</b>
+            </div>
+          </div>
+
+          <div style="margin: 28px 0 20px;">
+            <% if (user) { %>
+              <% if (myBooking) { %>
+                <div style="background: rgba(16, 185, 129, 0.12); border: 1px solid rgba(16, 185, 129, 0.35); border-radius: 12px; padding: 18px; margin-bottom: 16px; text-align: center;">
+                  <div style="color: #6ee7b7; font-weight: 800; font-size: 15px; margin-bottom: 4px;">&check; Seat Confirmed</div>
+                  <p style="color: var(--text-muted); font-size: 13px;">You have a reserved spot for this session. A calendar invite has been dispatched.</p>
+                </div>
+                <a class="btn btn-ghost btn-block" href="/dashboard">View In Member Dashboard &rarr;</a>
+              <% } else if (cls.spotsLeft > 0) { %>
+                <form action="/classes/<%= cls.id %>/book" method="post">
+                  <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+                  <button class="btn btn-lg btn-block" type="submit">
+                    <span>Confirm Reservation</span>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+                  </button>
+                </form>
+                <p style="font-size: 12px; color: var(--text-faint); text-align: center; margin-top: 12px;">Free cancellation up to 6 hours prior to session start.</p>
+              <% } else { %>
+                <button class="btn btn-block" disabled style="opacity: 0.5;">Cohort Capacity Full</button>
+                <p style="font-size: 12.5px; color: var(--text-faint); text-align: center; margin-top: 10px;">Contact the front desk to be placed on priority standby.</p>
+              <% } %>
+            <% } else { %>
+              <a class="btn btn-lg btn-block" href="/login?next=/classes/<%= cls.slug %>">
+                <span>Sign In To Reserve</span>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+              </a>
+              <div style="text-align: center; margin-top: 14px; font-size: 13.5px; color: var(--text-muted);">
+                First time at ForgeFit? <a href="/register" style="color: var(--volt); font-weight: 700;">Claim a complimentary pass</a>
+              </div>
+            <% } %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

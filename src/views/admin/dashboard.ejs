@@ -1,0 +1,268 @@
+<div class="admin-page-header">
+  <div>
+    <div class="admin-badge-beacon">
+      <span class="beacon-dot"></span>
+      <span>STUDIO CONSOLE &bull; REAL-TIME TELEMETRY</span>
+    </div>
+    <h1 class="admin-title">Studio Executive Overview</h1>
+    <p class="admin-sub">High-level capacity, cohort reservations, member acquisitions, and system health.</p>
+  </div>
+  <div class="admin-header-actions">
+    <a href="/admin/classes/new" class="btn btn-sm btn-primary-glow" style="padding:8px 18px;font-size:12.5px;">+ New Class</a>
+    <a href="/admin/trainers/new" class="btn btn-sm btn-ghost">+ Add Coach</a>
+    <a href="/admin/security" class="btn btn-sm btn-ghost" style="border-color:rgba(183,255,0,0.3);color:var(--neon-lime);">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+      <span>Security Hub</span>
+    </a>
+  </div>
+</div>
+
+<!-- 8 High-Impact KPI Stat Cards -->
+<div class="admin-stat-grid">
+  <!-- 1: Total Active Members -->
+  <div class="admin-stat-card">
+    <div class="stat-card-top">
+      <span class="stat-card-title">Athletic Members</span>
+      <div class="stat-card-icon" style="color:var(--neon-lime);border-color:rgba(183,255,0,0.3);">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+      </div>
+    </div>
+    <div class="stat-card-val"><%= stats.members %></div>
+    <div class="stat-card-hint"><span style="color:var(--neon-lime);font-weight:700;">+<%= stats.newMembersWeek %></span> joined past 7 days</div>
+  </div>
+
+  <!-- 2: Active Classes -->
+  <div class="admin-stat-card">
+    <div class="stat-card-top">
+      <span class="stat-card-title">Live Class Blocks</span>
+      <div class="stat-card-icon" style="color:var(--cyan-glow);border-color:rgba(0,245,160,0.3);">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+      </div>
+    </div>
+    <div class="stat-card-val"><%= stats.activeClasses %></div>
+    <div class="stat-card-hint">Periodized weekly curriculum</div>
+  </div>
+
+  <!-- 3: Active Bookings -->
+  <div class="admin-stat-card">
+    <div class="stat-card-top">
+      <span class="stat-card-title">Active Floor Bookings</span>
+      <div class="stat-card-icon" style="color:var(--neon-lime);border-color:rgba(183,255,0,0.3);">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+      </div>
+    </div>
+    <div class="stat-card-val"><%= stats.bookings %></div>
+    <div class="stat-card-hint"><span style="color:var(--neon-lime);font-weight:700;"><%= stats.bookingsMonth %></span> completed this month</div>
+  </div>
+
+  <!-- 4: Active Memberships -->
+  <div class="admin-stat-card">
+    <div class="stat-card-top">
+      <span class="stat-card-title">Active Passes &amp; Tiers</span>
+      <div class="stat-card-icon" style="color:var(--emerald);border-color:rgba(16,185,129,0.3);">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+      </div>
+    </div>
+    <div class="stat-card-val"><%= stats.activeMemberships %></div>
+    <div class="stat-card-hint">Current enrolled subscription roster</div>
+  </div>
+
+  <!-- 5: Unread Messages -->
+  <div class="admin-stat-card">
+    <div class="stat-card-top">
+      <span class="stat-card-title">Concierge Inquiries</span>
+      <div class="stat-card-icon" style="color:<%= stats.unreadMessages > 0 ? 'var(--neon-lime)' : 'var(--text-muted)' %>;border-color:rgba(183,255,0,0.3);">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+      </div>
+    </div>
+    <div class="stat-card-val"><%= stats.unreadMessages %></div>
+    <div class="stat-card-hint">
+      <% if (stats.unreadMessages > 0) { %>
+        <span style="color:var(--neon-lime);font-weight:700;"><%= stats.unreadMessages %> unread</span> pending response
+      <% } else { %>
+        <span>Inbox up to date</span>
+      <% } %>
+    </div>
+  </div>
+
+  <!-- 6: Admins -->
+  <div class="admin-stat-card">
+    <div class="stat-card-top">
+      <span class="stat-card-title">Console Operators</span>
+      <div class="stat-card-icon" style="color:var(--neon-lime);border-color:rgba(183,255,0,0.3);">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+      </div>
+    </div>
+    <div class="stat-card-val"><%= stats.admins %></div>
+    <div class="stat-card-hint">Elevated role authorization</div>
+  </div>
+
+  <!-- 7: Database Engine -->
+  <div class="admin-stat-card">
+    <div class="stat-card-top">
+      <span class="stat-card-title">Database Engine</span>
+      <div class="stat-card-icon" style="color:#f29111;border-color:rgba(242,145,17,0.3);">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
+      </div>
+    </div>
+    <div class="stat-card-val" style="font-size:22px;margin-top:6px;">MySQL 8.x</div>
+    <div class="stat-card-hint"><a href="<%= config.phpMyAdminUrl %>" target="_blank" rel="noopener noreferrer" style="color:#f29111;font-weight:700;">phpMyAdmin &bull; 3306 ↗</a></div>
+  </div>
+
+  <!-- 8: Session Engine -->
+  <div class="admin-stat-card">
+    <div class="stat-card-top">
+      <span class="stat-card-title">Security Posture</span>
+      <div class="stat-card-icon" style="color:var(--emerald);border-color:rgba(16,185,129,0.3);">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 14 14"></polyline></svg>
+      </div>
+    </div>
+    <div class="stat-card-val" style="font-size:22px;color:var(--emerald);margin-top:6px;">Hardened</div>
+    <div class="stat-card-hint"><a href="/admin/security" style="color:var(--neon-lime);font-weight:700;">Audit &amp; Telemetry Hub &rarr;</a></div>
+  </div>
+</div>
+
+<!-- Two-Column Operational Panels -->
+<div class="two-col" style="margin-top:28px;">
+  <!-- Latest Bookings Panel -->
+  <div class="panel">
+    <div class="panel-header-inline">
+      <h3>
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#B7FF00" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+        <span>Latest Floor Bookings</span>
+      </h3>
+      <a href="/admin/bookings" class="panel-more-link">All Bookings &rarr;</a>
+    </div>
+
+    <% if (recentBookings && recentBookings.length) { %>
+    <div class="table-wrap" style="border:none;margin-top:10px;">
+      <table class="data">
+        <thead>
+          <tr>
+            <th>Member</th>
+            <th>Class Session</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% recentBookings.forEach(function(b) { %>
+          <tr>
+            <td>
+              <div style="font-weight:700;color:#fff;"><%= b.user_name %></div>
+            </td>
+            <td>
+              <span style="color:#e2e8f0;font-size:13.5px;"><%= b.class_title %></span>
+            </td>
+            <td>
+              <span class="badge <%= b.status==='booked'?'volt':b.status==='attended'?'ok':'warn' %>">
+                <%= b.status %>
+              </span>
+            </td>
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+    <% } else { %>
+      <p class="muted" style="padding:24px 0;">No active bookings recorded yet.</p>
+    <% } %>
+  </div>
+
+  <!-- Newest Members Panel -->
+  <div class="panel">
+    <div class="panel-header-inline">
+      <h3>
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#B7FF00" stroke-width="2.2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>
+        <span>Newest Enrolled Athletes</span>
+      </h3>
+      <a href="/admin/members" class="panel-more-link">All Members &rarr;</a>
+    </div>
+
+    <% if (recentMembers && recentMembers.length) { %>
+    <div class="table-wrap" style="border:none;margin-top:10px;">
+      <table class="data">
+        <thead>
+          <tr>
+            <th>Athlete</th>
+            <th>Email</th>
+            <th>Verification</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% recentMembers.forEach(function(m) { %>
+          <tr>
+            <td>
+              <div style="display:flex;align-items:center;gap:10px;">
+                <span class="avatar-sm"><%= m.name.charAt(0).toUpperCase() %></span>
+                <strong style="color:#fff;"><%= m.name %></strong>
+              </div>
+            </td>
+            <td style="color:var(--text-muted);font-size:13px;"><%= m.email %></td>
+            <td>
+              <% if (m.email_verified_at) { %>
+                <span class="badge ok">Verified</span>
+              <% } else { %>
+                <span class="badge warn">Pending OTP</span>
+              <% } %>
+            </td>
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+    <% } else { %>
+      <p class="muted" style="padding:24px 0;">No members enrolled yet.</p>
+    <% } %>
+  </div>
+</div>
+
+<!-- Recent Security Activity Log Strip -->
+<div class="panel" style="margin-top:28px;">
+  <div class="panel-header-inline">
+    <h3>
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#B7FF00" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+      <span>Live Surveillance &amp; Audit Trail</span>
+    </h3>
+    <a href="/admin/security" class="panel-more-link">Full Security Console &rarr;</a>
+  </div>
+
+  <% if (recentAudit && recentAudit.length) { %>
+  <div class="table-wrap" style="border:none;margin-top:10px;">
+    <table class="data">
+      <thead>
+        <tr>
+          <th>Event Action</th>
+          <th>Actor Identity</th>
+          <th>Event Payload / Details</th>
+          <th>Timestamp</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% recentAudit.forEach(function(a) { 
+          let badgeClass = 'info';
+          if (a.action.includes('failed') || a.action.includes('delete') || a.action.includes('cancel')) badgeClass = 'warn';
+          else if (a.action.includes('login') || a.action.includes('create') || a.action.includes('verified')) badgeClass = 'ok';
+          else if (a.action.includes('security')) badgeClass = 'volt';
+        %>
+        <tr class="audit-row">
+          <td>
+            <span class="badge <%= badgeClass %>"><%= a.action %></span>
+          </td>
+          <td>
+            <span style="color:#fff;font-weight:600;"><%= a.actor_name || 'System / Anonymous' %></span>
+          </td>
+          <td style="color:var(--text-muted);font-size:13px;max-width:340px;word-break:break-all;">
+            <%= a.detail || '—' %>
+          </td>
+          <td style="font-size:12.5px;color:var(--text-faint);font-family:monospace;white-space:nowrap;">
+            <%= new Date(a.created_at).toLocaleString('en-IN', { day:'numeric', month:'short', hour:'2-digit', minute:'2-digit' }) %>
+          </td>
+        </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+  <% } else { %>
+    <p class="muted" style="padding:24px 0;">No system events recorded yet.</p>
+  <% } %>
+</div>

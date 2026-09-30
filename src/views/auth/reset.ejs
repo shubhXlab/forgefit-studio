@@ -1,0 +1,12 @@
+<div class="wrap">
+  <div class="form-card">
+    <h1>Set a new password</h1>
+    <p class="form-sub">Choose a strong password you don't use elsewhere.</p>
+    <form action="/reset-password" method="post">
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+      <div class="field"><label for="password">New password</label><input id="password" name="password" type="password" required autocomplete="new-password" /><div class="pw-meter" id="pwMeter"><i></i></div><div class="hint">At least 10 characters, with a letter and a number.</div></div>
+      <div class="field"><label for="confirm">Confirm new password</label><input id="confirm" name="confirm" type="password" required autocomplete="new-password" /></div>
+      <button class="btn btn-block" type="submit">Update password</button>
+    </form>
+  </div>
+</div>

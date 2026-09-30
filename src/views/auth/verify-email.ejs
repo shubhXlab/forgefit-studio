@@ -1,0 +1,20 @@
+<div class="wrap">
+  <div class="form-card">
+    <h1>Check your email</h1>
+    <p class="form-sub">We sent a 6-digit verification code to <b style="color:var(--text)"><%= email %></b>. It expires in 10 minutes.</p>
+    <form action="/verify-email" method="post">
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+      <input type="hidden" name="email" value="<%= email %>" />
+      <div class="field"><label for="code">Verification code</label><input id="code" class="otp-input" name="code" maxlength="6" required placeholder="••••••" /></div>
+      <button class="btn btn-block" type="submit">Verify email</button>
+    </form>
+    <hr class="divider" />
+    <form action="/resend-otp" method="post" style="text-align:center">
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+      <input type="hidden" name="email" value="<%= email %>" />
+      <input type="hidden" name="purpose" value="register_verify" />
+      <p class="muted" style="font-size:14px;margin-bottom:10px">Didn't get the code?</p>
+      <button class="btn btn-ghost btn-sm" type="submit">Resend code</button>
+    </form>
+  </div>
+</div>

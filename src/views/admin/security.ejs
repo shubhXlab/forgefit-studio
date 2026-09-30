@@ -1,0 +1,314 @@
+<div class="admin-page-header">
+  <div>
+    <div class="admin-badge-beacon">
+      <span class="beacon-dot"></span>
+      <span>DEFENSE &amp; SURVEILLANCE &bull; ACTIVE</span>
+    </div>
+    <h1 class="admin-title">Security &amp; Audit Command Hub</h1>
+    <p class="admin-sub">Real-time threat monitoring, cryptographic standards, session revocations, and system event logs.</p>
+  </div>
+  <div class="admin-header-actions">
+    <form action="/admin/security/purge-stale" method="post" style="display:inline;" onsubmit="return confirm('Purge all expired OTPs and stale sessions from MySQL?');">
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+      <button type="submit" class="btn btn-sm btn-ghost" style="border-color:rgba(183,255,0,0.3);color:var(--neon-lime);">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18m-2 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+        <span>Purge Stale Tokens</span>
+      </button>
+    </form>
+    <a href="/admin" class="btn btn-sm btn-ghost">&larr; Back to Overview</a>
+  </div>
+</div>
+
+<!-- Security Telemetry Metrics Grid -->
+<div class="admin-stat-grid">
+  <div class="admin-stat-card">
+    <div class="stat-card-top">
+      <span class="stat-card-title">MFA / 2FA Adoption</span>
+      <div class="stat-card-icon" style="color:var(--neon-lime);border-color:rgba(183,255,0,0.3);">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+      </div>
+    </div>
+    <div class="stat-card-val"><%= telemetry.twoFaAdoption %>%</div>
+    <div class="stat-card-hint">
+      <span style="color:var(--neon-lime);font-weight:700;"><%= telemetry.totpUsers %></span> TOTP &bull; 
+      <span style="color:var(--cyan-glow);font-weight:700;"><%= telemetry.email2faUsers %></span> Email 2FA
+    </div>
+  </div>
+
+  <div class="admin-stat-card">
+    <div class="stat-card-top">
+      <span class="stat-card-title">Failed Logins (24h)</span>
+      <div class="stat-card-icon" style="color:<%= telemetry.failedLogins24h > 5 ? '#f87171' : 'var(--neon-lime)' %>;border-color:rgba(239,68,68,0.3);">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+      </div>
+    </div>
+    <div class="stat-card-val"><%= telemetry.failedLogins24h %></div>
+    <div class="stat-card-hint">
+      <% if (telemetry.failedLogins24h === 0) { %>
+        <span style="color:var(--emerald);">Zero suspicious login attempts</span>
+      <% } else { %>
+        <span style="color:#f87171;">Brute-force limiters active</span>
+      <% } %>
+    </div>
+  </div>
+
+  <div class="admin-stat-card">
+    <div class="stat-card-top">
+      <span class="stat-card-title">Active Database Sessions</span>
+      <div class="stat-card-icon" style="color:var(--cyan-glow);border-color:rgba(0,245,160,0.3);">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
+      </div>
+    </div>
+    <div class="stat-card-val"><%= telemetry.activeSessionsCount %></div>
+    <div class="stat-card-hint">Persistent in MySQL `sessions` table</div>
+  </div>
+
+  <div class="admin-stat-card">
+    <div class="stat-card-top">
+      <span class="stat-card-title">Security Event Audit</span>
+      <div class="stat-card-icon" style="color:var(--neon-lime);border-color:rgba(183,255,0,0.3);">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+      </div>
+    </div>
+    <div class="stat-card-val"><%= telemetry.totalAuditEvents %></div>
+    <div class="stat-card-hint">Tamper-evident system activity logs</div>
+  </div>
+</div>
+
+<!-- Two-Column Section: Architecture Checklist & Emergency Controls -->
+<div class="two-col" style="margin-top:28px;">
+  <!-- Left: Security Architecture Controls -->
+  <div class="panel">
+    <div class="panel-header-inline">
+      <h3>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#B7FF00" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+        <span>Defense-in-Depth Architecture</span>
+      </h3>
+      <span class="badge ok">ALL LAYERS ENFORCED</span>
+    </div>
+
+    <div class="security-checklist">
+      <div class="security-check-item">
+        <div class="check-icon-ok">&#10003;</div>
+        <div class="check-body">
+          <strong>Cryptographic Password Hashing</strong>
+          <span>Scrypt key derivation (N=16384, r=8, p=1) with 32-byte cryptographically secure random per-user salt.</span>
+        </div>
+        <span class="badge ok">Scrypt</span>
+      </div>
+
+      <div class="security-check-item">
+        <div class="check-icon-ok">&#10003;</div>
+        <div class="check-body">
+          <strong>Session Hardening &amp; Versioning</strong>
+          <span>Session rotation on privilege escalation, HttpOnly cookies, SameSite=Lax, and instant invalidation via session_version.</span>
+        </div>
+        <span class="badge ok">Enforced</span>
+      </div>
+
+      <div class="security-check-item">
+        <div class="check-icon-ok">&#10003;</div>
+        <div class="check-body">
+          <strong>Anti-CSRF Protection</strong>
+          <span>Synchronizer token architecture with cryptographically generated 24-byte tokens required on all mutations.</span>
+        </div>
+        <span class="badge ok">Active</span>
+      </div>
+
+      <div class="security-check-item">
+        <div class="check-icon-ok">&#10003;</div>
+        <div class="check-body">
+          <strong>SQL Injection Defense</strong>
+          <span>Parameterized queries across 100% of application queries via MySQL prepared statements.</span>
+        </div>
+        <span class="badge ok">Protected</span>
+      </div>
+
+      <div class="security-check-item">
+        <div class="check-icon-ok">&#10003;</div>
+        <div class="check-body">
+          <strong>Brute-Force Rate Limiting</strong>
+          <span>In-memory sliding window rate-limiter on login, registration, and OTP generation endpoints.</span>
+        </div>
+        <span class="badge ok">Throttled</span>
+      </div>
+
+      <div class="security-check-item">
+        <div class="check-icon-ok">&#10003;</div>
+        <div class="check-body">
+          <strong>HTTP Security Headers</strong>
+          <span>X-Frame-Options (SAMEORIGIN), X-Content-Type-Options (nosniff), Referrer-Policy, HSTS.</span>
+        </div>
+        <span class="badge ok">Hardened</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Right: Emergency Threat Mitigation & Session Revocation -->
+  <div class="panel">
+    <div class="panel-header-inline">
+      <h3>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f87171" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line></svg>
+        <span>Emergency Session Invalidation</span>
+      </h3>
+      <span class="badge warn">ADMIN ACCESS ONLY</span>
+    </div>
+
+    <p class="muted" style="font-size:13.5px;margin-bottom:20px;line-height:1.6;">
+      In the event of suspected credential compromise or device theft, use these instant session revocation triggers. Users will be immediately signed out and forced to re-authenticate with their credentials and 2FA.
+    </p>
+
+    <div class="emergency-controls-stack">
+      <div class="emergency-card">
+        <div>
+          <strong style="color:#fff;display:block;font-size:14px;margin-bottom:3px;">Terminate All Member Sessions</strong>
+          <span class="muted" style="font-size:12.5px;">Bumps session version for all registered athletic club members.</span>
+        </div>
+        <form action="/admin/security/revoke-members" method="post" onsubmit="return confirm('Immediately terminate ALL active member sessions across all devices?');">
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+          <button type="submit" class="btn btn-sm btn-danger" style="white-space:nowrap;">Revoke Members</button>
+        </form>
+      </div>
+
+      <div class="emergency-card">
+        <div>
+          <strong style="color:#fff;display:block;font-size:14px;margin-bottom:3px;">Terminate Other Admin Sessions</strong>
+          <span class="muted" style="font-size:12.5px;">Invalidates all other active studio admin sessions, preserving yours.</span>
+        </div>
+        <form action="/admin/security/revoke-admins" method="post" onsubmit="return confirm('Immediately terminate all other admin sessions?');">
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+          <button type="submit" class="btn btn-sm btn-danger" style="white-space:nowrap;">Revoke Other Admins</button>
+        </form>
+      </div>
+
+      <div class="emergency-card">
+        <div>
+          <strong style="color:#fff;display:block;font-size:14px;margin-bottom:3px;">Configure Admin 2FA / MFA</strong>
+          <span class="muted" style="font-size:12.5px;">Secure your own admin account with Google Authenticator or 1Password.</span>
+        </div>
+        <a href="/security" class="btn btn-sm btn-ghost" style="border-color:rgba(183,255,0,0.4);color:var(--neon-lime);white-space:nowrap;">Setup My 2FA &rarr;</a>
+      </div>
+    </div>
+
+    <!-- Admin Accounts 2FA Status -->
+    <h4 style="font-size:14px;color:#fff;margin:28px 0 12px;display:flex;align-items:center;gap:8px;">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>
+      <span>Studio Administrators &amp; 2FA Posture</span>
+    </h4>
+    <div class="table-wrap" style="border:none;">
+      <table class="data">
+        <thead>
+          <tr>
+            <th>Administrator</th>
+            <th>2FA Status</th>
+            <th>Last Active</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% telemetry.adminUsers.forEach(function(adm) { %>
+          <tr>
+            <td>
+              <strong style="color:#fff;"><%= adm.name %></strong>
+              <div style="font-size:12px;color:var(--text-faint);"><%= adm.email %></div>
+            </td>
+            <td>
+              <% if (adm.totp_enabled) { %>
+                <span class="badge ok">TOTP Authenticator</span>
+              <% } else if (adm.email_2fa) { %>
+                <span class="badge info">Email OTP</span>
+              <% } else { %>
+                <span class="badge warn">Password Only</span>
+              <% } %>
+            </td>
+            <td style="font-size:12.5px;color:var(--text-muted);">
+              <%= adm.last_login_at ? new Date(adm.last_login_at).toLocaleDateString('en-IN', { month:'short', day:'numeric', hour:'2-digit', minute:'2-digit' }) : 'Never' %>
+            </td>
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Security Audit Trail Table with Search & Filter -->
+<div class="panel" style="margin-top:28px;">
+  <div class="panel-header-inline" style="flex-wrap:wrap;gap:16px;">
+    <div>
+      <h3>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#B7FF00" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+        <span>Live System Audit Log</span>
+      </h3>
+      <p class="muted" style="font-size:13.5px;margin-top:4px;">Chronological surveillance trail of logins, administrative mutations, and security events.</p>
+    </div>
+
+    <!-- Filter Form -->
+    <form action="/admin/security" method="get" class="audit-filter-bar">
+      <div style="position:relative;">
+        <input type="text" name="q" value="<%= q %>" placeholder="Filter by email, IP, details..." class="filter-input-search" />
+      </div>
+      <select name="action" class="filter-select-action" onchange="this.form.submit()">
+        <option value="">All Actions (<%= distinctActions.length %> types)</option>
+        <% distinctActions.forEach(function(act) { %>
+          <option value="<%= act %>" <%= actionFilter === act ? 'selected' : '' %>><%= act %></option>
+        <% }) %>
+      </select>
+      <button type="submit" class="btn btn-sm btn-ghost">Filter</button>
+      <% if (q || actionFilter) { %>
+        <a href="/admin/security" class="btn btn-sm btn-ghost" style="color:#f87171;">Clear</a>
+      <% } %>
+    </form>
+  </div>
+
+  <% if (auditLogs && auditLogs.length) { %>
+  <div class="table-wrap" style="margin-top:20px;border-color:rgba(255,255,255,0.08);">
+    <table class="data">
+      <thead>
+        <tr>
+          <th>Timestamp</th>
+          <th>Action</th>
+          <th>Actor</th>
+          <th>IP Origin</th>
+          <th>Event Detail</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% auditLogs.forEach(function(log) { 
+          let badgeClass = 'info';
+          if (log.action.includes('login_failed') || log.action.includes('delete') || log.action.includes('blocked')) badgeClass = 'warn';
+          else if (log.action.includes('login') || log.action.includes('create') || log.action.includes('verified')) badgeClass = 'ok';
+          else if (log.action.includes('security')) badgeClass = 'volt';
+        %>
+        <tr class="audit-row">
+          <td style="white-space:nowrap;font-size:12.5px;color:var(--text-muted);font-family:monospace;">
+            <%= new Date(log.created_at).toLocaleString('en-IN', { month:'short', day:'numeric', hour:'2-digit', minute:'2-digit', second:'2-digit' }) %>
+          </td>
+          <td>
+            <span class="badge <%= badgeClass %>"><%= log.action %></span>
+          </td>
+          <td>
+            <% if (log.actor_name) { %>
+              <strong style="color:#fff;"><%= log.actor_name %></strong>
+              <div style="font-size:11.5px;color:var(--text-faint);"><%= log.actor_email %></div>
+            <% } else { %>
+              <span class="muted">&mdash; (Anonymous / System)</span>
+            <% } %>
+          </td>
+          <td style="font-family:monospace;font-size:12px;color:var(--text-faint);">
+            <%= log.ip || '127.0.0.1' %>
+          </td>
+          <td style="font-size:13px;color:#e2e8f0;max-width:320px;word-break:break-all;">
+            <%= log.detail || '—' %>
+          </td>
+        </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+  <% } else { %>
+    <div style="text-align:center;padding:48px 20px;color:var(--text-muted);">
+      <p style="font-size:15px;margin-bottom:8px;">No audit events matched your query.</p>
+      <a href="/admin/security" style="color:var(--neon-lime);font-size:13px;font-weight:700;">Reset Filters &rarr;</a>
+    </div>
+  <% } %>
+</div>

@@ -1,0 +1,13 @@
+<div class="wrap">
+  <div class="form-card">
+    <h1>My profile</h1>
+    <p class="form-sub"><%= user.email %> · member since <%= new Date(user.created_at).toLocaleDateString('en-IN', { month: 'long', year: 'numeric' }) %></p>
+    <form action="/profile" method="post">
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+      <div class="field"><label for="name">Full name</label><input id="name" name="name" value="<%= form.name %>" required /></div>
+      <div class="field"><label for="phone">Phone number</label><input id="phone" name="phone" type="tel" value="<%= form.phone %>" required /></div>
+      <button class="btn" type="submit">Save changes</button>
+    </form>
+    <p class="form-alt"><a href="/dashboard">← Back to dashboard</a></p>
+  </div>
+</div>

@@ -1,0 +1,18 @@
+<h1><%= p.id ? 'Edit plan' : 'New plan' %></h1>
+<p class="admin-sub">One feature per line — they'll render as a checklist.</p>
+<div class="form-card wide" style="margin:0;max-width:none">
+<form action="<%= formAction %>" method="post">
+  <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+  <div class="field-row">
+    <div class="field"><label>Plan name *</label><input name="name" value="<%= p.name || '' %>" required maxlength="80" placeholder="e.g. Monthly Unlimited" /></div>
+    <div class="field"><label>Price (₹) *</label><input name="price" type="number" min="0" step="1" value="<%= p.price != null ? p.price : 2999 %>" required /></div>
+  </div>
+  <div class="field-row">
+    <div class="field"><label>Duration (days) *</label><input name="duration_days" type="number" min="1" max="3650" value="<%= p.duration_days || 30 %>" required /></div>
+    <div class="field"><label>Display order</label><input name="sort_order" type="number" value="<%= p.sort_order || 0 %>" /></div>
+  </div>
+  <div class="field"><label>Features</label><textarea name="features" maxlength="2000" placeholder="Unlimited group classes&#10;Recovery zone access&#10;1 PT session per month"><%= p.features || '' %></textarea></div>
+  <button class="btn" type="submit"><%= p.id ? 'Save changes' : 'Create plan' %></button>
+  <a class="btn btn-ghost" href="/admin/plans" style="margin-left:8px">Cancel</a>
+</form>
+</div>

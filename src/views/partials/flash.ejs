@@ -1,0 +1,10 @@
+<% if (flash && flash.length) { %>
+<div class="flash-stack">
+  <% flash.forEach(function(f) { %>
+    <div class="flash flash-<%= f.type %>" role="alert">
+      <span><%= f.msg %></span>
+      <button type="button" class="flash-close" aria-label="Dismiss">×</button>
+    </div>
+  <% }) %>
+</div>
+<% } %>

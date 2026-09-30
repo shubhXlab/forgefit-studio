@@ -1,0 +1,87 @@
+<section class="section" style="padding-top: 50px; padding-bottom: 50px;">
+  <div class="wrap">
+    <div class="section-head-center reveal">
+      <span class="section-kicker">Concierge & Access</span>
+      <h1 class="section-title">Direct Line to Studio Desk</h1>
+      <p class="section-subtitle">Reach out for personal coaching consultations, corporate cohorts, or facility tours.</p>
+    </div>
+
+    <div class="detail-layout reveal" style="margin-top: 40px; align-items: start;">
+      <!-- Left: Studio Details & Hours -->
+      <div>
+        <div style="background: var(--bg-card); border: 1px solid var(--border-card); border-radius: var(--radius-lg); padding: 36px; box-shadow: var(--shadow-card); margin-bottom: 24px; backdrop-filter: blur(16px);">
+          <h2 style="font-size: 20px; margin-bottom: 20px; color: #fff;">Flagship Sanctuary</h2>
+          
+          <div style="display: flex; gap: 14px; margin-bottom: 22px;">
+            <div style="width: 40px; height: 40px; border-radius: 10px; background: var(--volt-subtle); border: 1px solid var(--volt-border); display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--volt);">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
+            <div>
+              <strong style="color: #fff; font-size: 15px;">ForgeFit Athletic Club</strong>
+              <p style="color: var(--text-muted); font-size: 14px; margin-top: 3px;">84/2, 100 Feet Road, HAL 2nd Stage, Indiranagar, Bengaluru, KA 560038</p>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 14px; margin-bottom: 22px;">
+            <div style="width: 40px; height: 40px; border-radius: 10px; background: var(--volt-subtle); border: 1px solid var(--volt-border); display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--volt);">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </div>
+            <div>
+              <strong style="color: #fff; font-size: 15px;">Floor Hours</strong>
+              <p style="color: var(--text-muted); font-size: 14px; margin-top: 3px;">Monday – Saturday: 05:30 AM – 10:30 PM<br/>Sunday: 07:00 AM – 06:00 PM (Recovery & Mobility)</p>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 14px;">
+            <div style="width: 40px; height: 40px; border-radius: 10px; background: var(--volt-subtle); border: 1px solid var(--volt-border); display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--volt);">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </div>
+            <div>
+              <strong style="color: #fff; font-size: 15px;">Direct Inquiries</strong>
+              <p style="color: var(--text-muted); font-size: 14px; margin-top: 3px;">concierge@forgefit.com &middot; +91 (080) 4123-FORGE</p>
+            </div>
+          </div>
+        </div>
+
+        <div style="background: rgba(18, 22, 29, 0.5); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 24px;">
+          <h4 style="font-size: 15px; margin-bottom: 6px; color: #fff;">Valet & Parking</h4>
+          <p style="color: var(--text-muted); font-size: 13.5px; line-height: 1.6;">Dedicated basement parking with EV fast-charging stations available for active members during class hours.</p>
+        </div>
+      </div>
+
+      <!-- Right: Form -->
+      <div>
+        <div style="background: var(--bg-card); border: 1px solid var(--border-card); border-radius: var(--radius-lg); padding: 36px 32px; box-shadow: var(--shadow-card); backdrop-filter: blur(16px);">
+          <h2 style="font-size: 22px; margin-bottom: 6px;">Send A Message</h2>
+          <p class="form-sub" style="margin-bottom: 24px;">Our concierge responds within 2-4 business hours.</p>
+
+          <form action="/contact" method="post">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+            <div class="field-row">
+              <div class="field">
+                <label for="name">Your Name</label>
+                <input id="name" name="name" value="<%= form.name || '' %>" placeholder="e.g. Rahul Verma" required />
+              </div>
+              <div class="field">
+                <label for="email">Email Address</label>
+                <input id="email" name="email" type="email" value="<%= form.email || '' %>" placeholder="rahul@example.com" required />
+              </div>
+            </div>
+            <div class="field">
+              <label for="subject">Subject</label>
+              <input id="subject" name="subject" value="<%= form.subject || '' %>" placeholder="e.g. Private Training / Studio Tour" />
+            </div>
+            <div class="field">
+              <label for="message">Your Message</label>
+              <textarea id="message" name="message" placeholder="Tell us about your fitness background and goals..." required><%= form.message || '' %></textarea>
+            </div>
+            <button class="btn btn-lg btn-block" type="submit">
+              <span>Transmit Message</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

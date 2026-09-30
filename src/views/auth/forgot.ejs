@@ -1,0 +1,29 @@
+<div class="wrap">
+  <div class="form-card">
+    <% if (step === 'email') { %>
+      <h1>Forgot password</h1>
+      <p class="form-sub">Enter the email you registered with. If an account exists, we'll send a reset code.</p>
+      <form action="/forgot-password" method="post">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+        <div class="field"><label for="email">Email address</label><input id="email" name="email" type="email" required autocomplete="email" /></div>
+        <button class="btn btn-block" type="submit">Send reset code</button>
+      </form>
+    <% } else { %>
+      <h1>Enter reset code</h1>
+      <p class="form-sub">We sent a 6-digit code to <b style="color:var(--text)"><%= email %></b>. It expires in 10 minutes.</p>
+      <form action="/forgot-password/verify" method="post">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+        <div class="field"><label for="code">Reset code</label><input id="code" class="otp-input" name="code" maxlength="6" required placeholder="••••••" /></div>
+        <button class="btn btn-block" type="submit">Verify code</button>
+      </form>
+      <hr class="divider" />
+      <form action="/resend-otp" method="post" style="text-align:center">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+        <input type="hidden" name="email" value="<%= email %>" />
+        <input type="hidden" name="purpose" value="password_reset" />
+        <button class="btn btn-ghost btn-sm" type="submit">Resend code</button>
+      </form>
+    <% } %>
+    <p class="form-alt"><a href="/login">Back to login</a></p>
+  </div>
+</div>

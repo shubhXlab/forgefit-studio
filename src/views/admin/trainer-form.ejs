@@ -1,0 +1,25 @@
+<h1><%= t.id ? 'Edit trainer' : 'New trainer' %></h1>
+<p class="admin-sub">Trainer profiles appear on the website's Trainers page.</p>
+<div class="form-card wide" style="margin:0;max-width:none">
+<form action="<%= formAction %>" method="post" enctype="multipart/form-data">
+  <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+  <div class="field-row">
+    <div class="field"><label>Name *</label><input name="name" value="<%= t.name || '' %>" required maxlength="80" /></div>
+    <div class="field"><label>Specialty</label><input name="specialty" value="<%= t.specialty || '' %>" maxlength="120" placeholder="e.g. Strength & Conditioning" /></div>
+  </div>
+  <div class="field"><label>Bio</label><textarea name="bio" maxlength="2000"><%= t.bio || '' %></textarea></div>
+  <div class="field"><label>Display order</label><input name="sort_order" type="number" value="<%= t.sort_order || 0 %>" /><div class="hint">Lower numbers appear first.</div></div>
+  <div class="field">
+    <label>Photo</label>
+    <% if (t.image) { %><p class="hint" style="margin-bottom:8px">Current: <img src="<%= t.image %>" alt="" style="height:60px;border-radius:8px;display:inline-block;vertical-align:middle" /></p><% } %>
+    <input type="file" name="image" accept="image/jpeg,image/png,image/webp" />
+    <div class="hint">Or pick from the studio gallery:</div>
+    <div class="gallery-pick">
+      <label><input type="radio" name="gallery_image" value="" <%= !t.image || t.image.startsWith('/uploads/') ? 'checked' : '' %> /><span class="none-opt">Keep current / none</span></label>
+      <% gallery.forEach(function(g) { %><label><input type="radio" name="gallery_image" value="<%= g %>" <%= t.image===g?'checked':'' %> /><img src="<%= g %>" alt="" loading="lazy" /></label><% }) %>
+    </div>
+  </div>
+  <button class="btn" type="submit"><%= t.id ? 'Save changes' : 'Add trainer' %></button>
+  <a class="btn btn-ghost" href="/admin/trainers" style="margin-left:8px">Cancel</a>
+</form>
+</div>

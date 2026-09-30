@@ -1,0 +1,75 @@
+<h1>Memberships</h1>
+<p class="admin-sub">Assign plans to members. Assigning a new plan updates the member's current active plan.</p>
+
+<div class="panel">
+  <h3>Assign a Plan</h3>
+  <% if (members.length && plans.length) { %>
+  <form action="/admin/memberships/assign" method="post" style="display: flex; gap: 12px; flex-wrap: wrap; align-items: flex-end;">
+    <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+    <div class="field" style="margin: 0; min-width: 240px;">
+      <label>Member</label>
+      <select name="user_id" required>
+        <% members.forEach(function(m) { %>
+          <option value="<%= m.id %>"><%= m.name %> (<%= m.email %>)</option>
+        <% }) %>
+      </select>
+    </div>
+    <div class="field" style="margin: 0; min-width: 200px;">
+      <label>Plan</label>
+      <select name="plan_id" required>
+        <% plans.forEach(function(p) { %>
+          <option value="<%= p.id %>"><%= p.name %> &mdash; ₹<%= Number(p.price).toLocaleString('en-IN') %> / <%= p.duration_days %>d</option>
+        <% }) %>
+      </select>
+    </div>
+    <button class="btn btn-sm" style="padding: 12px 22px;">Assign Membership</button>
+  </form>
+  <% } else { %>
+    <p class="muted">You need at least one active member and one active plan to assign memberships.</p>
+  <% } %>
+</div>
+
+<div class="table-wrap">
+  <table class="data">
+    <thead>
+      <tr>
+        <th>Member</th>
+        <th>Plan</th>
+        <th>Starts</th>
+        <th>Ends</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% memberships.forEach(function(m) { %>
+      <tr>
+        <td>
+          <b style="color: #fff;"><%= m.user_name %></b><br/>
+          <span class="muted" style="font-size: 13px;"><%= m.user_email %></span>
+        </td>
+        <td><%= m.plan_name %></td>
+        <td class="muted"><%= new Date(m.starts_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }) %></td>
+        <td class="muted"><%= new Date(m.ends_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }) %></td>
+        <td><span class="badge <%= m.status === 'active' ? 'ok' : 'warn' %>"><%= m.status %></span></td>
+        <td>
+          <% if (m.status === 'active') { %>
+          <form action="/admin/memberships/<%= m.id %>/cancel" method="post" style="display:inline;">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+            <button class="btn btn-danger btn-sm" data-confirm="Cancel this membership?">Cancel</button>
+          </form>
+          <% } %>
+        </td>
+      </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</div>
+<% if (!memberships.length) { %>
+<div class="empty">
+  <div style="width: 44px; height: 44px; border-radius: 12px; background: rgba(204, 255, 0, 0.08); border: 1px solid rgba(204, 255, 0, 0.25); display: inline-flex; align-items: center; justify-content: center; color: var(--volt); margin-bottom: 12px;">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+  </div>
+  <p>No memberships assigned yet.</p>
+</div>
+<% } %>

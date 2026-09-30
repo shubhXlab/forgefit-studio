@@ -1,0 +1,81 @@
+<section class="section" style="padding-top: 50px; padding-bottom: 50px;">
+  <div class="wrap">
+    <div class="section-head-center reveal">
+      <span class="section-kicker">Our Manifesto</span>
+      <h1 class="section-title">We Don't Sell Keycards.<br/>We Coach Athletes.</h1>
+      <p class="section-subtitle">Founded on the principle that real physical transformation requires uncompromised instruction, progressive overload, and intelligent recovery.</p>
+    </div>
+
+    <div class="detail-layout reveal" style="margin-top: 48px; align-items: center;">
+      <div style="position: relative; border-radius: var(--radius-lg); overflow: hidden; border: 1px solid var(--border-card); box-shadow: var(--shadow-card);">
+        <img class="main" src="/img/about.jpg" alt="Coach training with a member at ForgeFit" style="width: 100%; aspect-ratio: 4/3; object-fit: cover;" />
+        <div style="position: absolute; bottom: 20px; left: 20px; right: 20px; background: rgba(12, 14, 18, 0.88); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 12px; padding: 14px 20px; display: flex; justify-content: space-between; align-items: center;">
+          <span style="font-weight: 700; font-size: 13.5px; color: #fff;">Floor 01 &middot; Competition Rig</span>
+          <span style="color: var(--volt); font-weight: 800; font-size: 12px; letter-spacing: 1px;">BANGALORE SANCTUARY</span>
+        </div>
+      </div>
+
+      <div>
+        <span class="section-kicker">The Founding Thesis</span>
+        <h2 style="font-size: clamp(26px, 3vw, 34px); margin-bottom: 16px;">The Commercial Gym Is Broken.</h2>
+        <p style="color: var(--text-muted); font-size: 15.5px; line-height: 1.7; margin-bottom: 18px;">
+          Traditional health clubs bank on you never showing up. They pack hundreds of machines onto a floor, offer zero movement guidance, and leave members vulnerable to injury or plateau.
+        </p>
+        <p style="color: var(--text-muted); font-size: 15.5px; line-height: 1.7; margin-bottom: 28px;">
+          ForgeFit was engineered as the antidote: every cohort is capped at 16, every workout is periodized in 8-week progressive overload cycles, and a certified master coach is on the floor for every single repetition.
+        </p>
+
+        <div class="grid-2 stagger-group" style="gap: 16px; margin-bottom: 32px;">
+          <div style="background: var(--bg-card); border: 1px solid var(--border-card); border-radius: 12px; padding: 20px 22px;">
+            <div style="font-family: var(--font-display); font-size: 30px; font-weight: 900; color: var(--volt);" data-counter="16" data-suffix=" Max">16 Max</div>
+            <div style="color: var(--text-muted); font-size: 13px; font-weight: 600; margin-top: 4px;">Cohort Floor Cap</div>
+          </div>
+          <div style="background: var(--bg-card); border: 1px solid var(--border-card); border-radius: 12px; padding: 20px 22px;">
+            <div style="font-family: var(--font-display); font-size: 30px; font-weight: 900; color: #fff;" data-counter="100" data-suffix="%">100%</div>
+            <div style="color: var(--text-muted); font-size: 13px; font-weight: 600; margin-top: 4px;">Coach-Supervised</div>
+          </div>
+          <div style="background: var(--bg-card); border: 1px solid var(--border-card); border-radius: 12px; padding: 20px 22px;">
+            <div style="font-family: var(--font-display); font-size: 30px; font-weight: 900; color: #fff;" data-counter="8" data-suffix="-Week">8-Week</div>
+            <div style="color: var(--text-muted); font-size: 13px; font-weight: 600; margin-top: 4px;">Diagnostic Blocks</div>
+          </div>
+          <div style="background: var(--bg-card); border: 1px solid var(--border-card); border-radius: 12px; padding: 20px 22px;">
+            <div style="font-family: var(--font-display); font-size: 30px; font-weight: 900; color: var(--volt);">&infin;</div>
+            <div style="color: var(--text-muted); font-size: 13px; font-weight: 600; margin-top: 4px;">Contrast Recovery</div>
+          </div>
+        </div>
+
+        <a class="btn btn-lg" href="/register">Join The Cohort &rarr;</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<% if (trainers && trainers.length) { %>
+<section class="section" style="background: rgba(12, 14, 18, 0.4); border-top: 1px solid var(--border-subtle);">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <span class="section-kicker">Faculty</span>
+        <h2 class="section-title">The Coaching Team</h2>
+        <p class="section-subtitle">Meet the practitioners who lead your daily sessions.</p>
+      </div>
+      <a class="btn btn-ghost" href="/trainers">All Coaches &rarr;</a>
+    </div>
+
+    <div class="grid-3 stagger-group">
+      <% trainers.forEach(function(t) { %>
+      <div class="card-trainer">
+        <div class="trainer-media">
+          <img src="<%= t.image || '/img/trainer-vikram.jpg' %>" alt="<%= t.name %>" loading="lazy" />
+          <div class="trainer-overlay"></div>
+          <div class="trainer-info-floating">
+            <h3 class="trainer-name"><%= t.name %></h3>
+            <span class="trainer-spec"><%= t.specialty %></span>
+          </div>
+        </div>
+      </div>
+      <% }) %>
+    </div>
+  </div>
+</section>
+<% } %>

@@ -1,0 +1,59 @@
+<div class="toolbar">
+  <div>
+    <h1>Membership Plans</h1>
+    <p class="admin-sub"><%= plans.length %> plan(s). Members see these on the Plans page.</p>
+  </div>
+  <a class="btn btn-sm" href="/admin/plans/new">+ New plan</a>
+</div>
+<div class="table-wrap">
+  <table class="data">
+    <thead>
+      <tr>
+        <th>Plan</th>
+        <th>Price</th>
+        <th>Duration</th>
+        <th>Order</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% plans.forEach(function(p) { %>
+      <tr>
+        <td><b style="color: #fff;"><%= p.name %></b></td>
+        <td>₹<%= Number(p.price).toLocaleString('en-IN') %></td>
+        <td class="muted"><%= p.duration_days %> days</td>
+        <td class="muted"><%= p.sort_order %></td>
+        <td>
+          <% if (p.is_active) { %>
+            <span class="badge ok">active</span>
+          <% } else { %>
+            <span class="badge warn">hidden</span>
+          <% } %>
+        </td>
+        <td>
+          <div class="row-actions">
+            <a class="btn btn-ghost btn-sm" href="/admin/plans/<%= p.id %>/edit">Edit</a>
+            <form action="/admin/plans/<%= p.id %>/toggle" method="post" style="display:inline;">
+              <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+              <button class="btn btn-ghost btn-sm"><%= p.is_active ? 'Hide' : 'Show' %></button>
+            </form>
+            <form action="/admin/plans/<%= p.id %>/delete" method="post" style="display:inline;">
+              <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+              <button class="btn btn-danger btn-sm" data-confirm="Delete the <%= p.name %> plan?">Delete</button>
+            </form>
+          </div>
+        </td>
+      </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</div>
+<% if (!plans.length) { %>
+<div class="empty">
+  <div style="width: 44px; height: 44px; border-radius: 12px; background: rgba(204, 255, 0, 0.08); border: 1px solid rgba(204, 255, 0, 0.25); display: inline-flex; align-items: center; justify-content: center; color: var(--volt); margin-bottom: 12px;">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+  </div>
+  <p>No plans yet. Create your first membership tier.</p>
+</div>
+<% } %>

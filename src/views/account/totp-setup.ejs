@@ -1,0 +1,21 @@
+<div class="wrap">
+  <div class="form-card wide">
+    <h1>Set up your authenticator app</h1>
+    <p class="form-sub">Scan the QR code with Google Authenticator, Authy, 1Password or any TOTP app — then enter the 6-digit code it shows to finish.</p>
+    <div style="text-align:center">
+      <div class="qr-box"><div id="qr"></div></div>
+    </div>
+    <p class="muted" style="text-align:center;font-size:14px;margin-bottom:8px">Can't scan? Enter this key manually:</p>
+    <p style="text-align:center;margin-bottom:8px"><span class="secret-key"><%= secret %></span></p>
+    <p style="text-align:center;margin-bottom:20px"><button class="btn btn-ghost btn-sm" data-copy="<%= secret %>">Copy</button></p>
+    <form action="/security/totp/confirm" method="post" style="max-width:340px;margin:0 auto">
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+      <div class="field"><label for="code">6-digit code from your app</label><input id="code" class="otp-input" name="code" maxlength="6" required placeholder="••••••" /></div>
+      <button class="btn btn-block" type="submit">Verify &amp; enable 2FA</button>
+    </form>
+  </div>
+</div>
+<script src="/js/vendor/qrcode.min.js"></script>
+<script>
+  new QRCode(document.getElementById('qr'), { text: <%- JSON.stringify(uri) %>, width: 200, height: 200, correctLevel: QRCode.CorrectLevel.M });
+</script>

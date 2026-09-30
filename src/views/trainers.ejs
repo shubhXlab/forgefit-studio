@@ -1,0 +1,65 @@
+<section class="section" style="padding-top: 50px; padding-bottom: 50px;">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <span class="section-kicker">Faculty & Master Coaches</span>
+        <h1 class="section-title">Built By Practitioners</h1>
+        <p class="section-subtitle">National-level lifters, sport scientists, and biomechanics authorities. Every coach trains on this floor.</p>
+      </div>
+      <div>
+        <a class="btn btn-ghost" href="/contact">Book 1-on-1 Consultation &rarr;</a>
+      </div>
+    </div>
+
+    <% if (trainers && trainers.length) { %>
+    <div class="grid-3 stagger-group">
+      <% trainers.forEach(function(t) { %>
+      <div class="card-trainer">
+        <div class="trainer-media">
+          <img src="<%= t.image || '/img/trainer-vikram.jpg' %>" alt="<%= t.name %>" loading="lazy" />
+          <div class="trainer-overlay"></div>
+          <div class="trainer-info-floating">
+            <h2 class="trainer-name"><%= t.name %></h2>
+            <div class="trainer-spec"><%= t.specialty %></div>
+          </div>
+        </div>
+        <div class="trainer-body">
+          <p class="trainer-bio"><%= t.bio || 'Specialist coach focusing on functional movement standards and peak performance.' %></p>
+          <div style="margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--border-subtle); display: flex; justify-content: space-between; align-items: center;">
+            <span style="font-size: 12.5px; color: var(--text-faint); font-weight: 600;">Floor &middot; Private Training</span>
+            <a href="/classes" style="font-size: 13px; font-weight: 700; color: var(--volt);">View Sessions &rarr;</a>
+          </div>
+        </div>
+      </div>
+      <% }) %>
+    </div>
+    <% } else { %>
+    <div class="form-card" style="text-align: center; max-width: 480px;">
+      <h3 style="margin-bottom: 8px;">Faculty Profiles Updating</h3>
+      <p class="muted">Check back shortly or visit our front desk for coach introductions.</p>
+    </div>
+    <% } %>
+
+    <!-- Coaching Standards Bento -->
+    <div class="reveal" style="margin-top: 70px; background: var(--bg-card); border: 1px solid var(--border-card); border-radius: var(--radius-lg); padding: 44px; box-shadow: var(--shadow-card); backdrop-filter: blur(16px);">
+      <div class="section-head-center" style="margin-bottom: 36px;">
+        <span class="section-kicker">Faculty Standards</span>
+        <h3 style="font-size: 24px; color: #fff;">The ForgeFit Coaching Creed</h3>
+      </div>
+      <div class="grid-3 stagger-group" style="gap: 28px;">
+        <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); padding: 24px;">
+          <strong style="color: var(--volt); font-size: 15px; display: block; margin-bottom: 8px; letter-spacing: 0.5px;">01 &middot; Science Over Hype</strong>
+          <p style="color: var(--text-muted); font-size: 13.5px; line-height: 1.65;">No gimmicks or dangerous social media stunts. Every rep is rooted in proven human physiology and joint biomechanics.</p>
+        </div>
+        <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); padding: 24px;">
+          <strong style="color: var(--volt); font-size: 15px; display: block; margin-bottom: 8px; letter-spacing: 0.5px;">02 &middot; Radical Form Candor</strong>
+          <p style="color: var(--text-muted); font-size: 13.5px; line-height: 1.65;">We strip weight off the bar when movement integrity breaks down. Your longevity is our primary metric of success.</p>
+        </div>
+        <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); padding: 24px;">
+          <strong style="color: var(--volt); font-size: 15px; display: block; margin-bottom: 8px; letter-spacing: 0.5px;">03 &middot; High-Touch Accountability</strong>
+          <p style="color: var(--text-muted); font-size: 13.5px; line-height: 1.65;">You are not an anonymous membership barcode. Our coaches remember your baseline numbers, injuries, and aspirations.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,46 @@
+<h1>Contact Messages</h1>
+<p class="admin-sub"><%= messages.length %> inquiry message(s) received from the website concierge form.</p>
+
+<% if (messages.length) { %>
+<div class="grid-2" style="margin-top: 20px;">
+  <% messages.forEach(function(m) { %>
+  <div class="panel" style="margin-bottom: 0;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+      <b style="font-size: 16px; color: #fff;"><%= m.name %></b>
+      <% if (m.is_read) { %>
+        <span class="badge">read</span>
+      <% } else { %>
+        <span class="badge info">new inquiry</span>
+      <% } %>
+    </div>
+    <p class="muted" style="font-size: 13px; margin-bottom: 10px;">
+      <%= m.email %> &middot; <%= new Date(m.created_at).toLocaleString('en-IN', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }) %>
+    </p>
+    <% if (m.subject) { %>
+      <p style="font-weight: 700; font-size: 14.5px; margin-bottom: 6px; color: #fff;"><%= m.subject %></p>
+    <% } %>
+    <p class="muted" style="font-size: 14px; white-space: pre-wrap; line-height: 1.6;"><%= m.body %></p>
+    <div class="row-actions" style="margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--border-subtle);">
+      <% if (!m.is_read) { %>
+      <form action="/admin/messages/<%= m.id %>/read" method="post" style="display:inline;">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+        <button class="btn btn-ghost btn-sm">Mark Read</button>
+      </form>
+      <% } %>
+      <form action="/admin/messages/<%= m.id %>/delete" method="post" style="display:inline;">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+        <button class="btn btn-danger btn-sm" data-confirm="Delete this message?">Delete</button>
+      </form>
+      <a class="btn btn-sm" href="mailto:<%= m.email %>?subject=Re: <%= encodeURIComponent(m.subject || 'Your ForgeFit Enquiry') %>">Reply via Email &rarr;</a>
+    </div>
+  </div>
+  <% }) %>
+</div>
+<% } else { %>
+<div class="empty">
+  <div style="width: 44px; height: 44px; border-radius: 12px; background: rgba(204, 255, 0, 0.08); border: 1px solid rgba(204, 255, 0, 0.25); display: inline-flex; align-items: center; justify-content: center; color: var(--volt); margin-bottom: 12px;">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+  </div>
+  <p>No messages received yet.</p>
+</div>
+<% } %>

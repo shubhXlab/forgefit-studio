@@ -1,0 +1,64 @@
+<div class="toolbar">
+  <div>
+    <h1>Trainers</h1>
+    <p class="admin-sub"><%= trainers.length %> coach(es) on the studio roster.</p>
+  </div>
+  <a class="btn btn-sm" href="/admin/trainers/new">+ New trainer</a>
+</div>
+<div class="table-wrap">
+  <table class="data">
+    <thead>
+      <tr>
+        <th>Trainer</th>
+        <th>Specialty</th>
+        <th>Order</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% trainers.forEach(function(t) { %>
+      <tr>
+        <td>
+          <% if (t.image) { %>
+            <img src="<%= t.image %>" alt="" style="width: 40px; height: 40px; object-fit: cover; border-radius: 50%; display: inline-block; vertical-align: middle; margin-right: 8px; border: 1px solid var(--border-card);" />
+          <% } else { %>
+            <span class="avatar-sm"><%= t.name.charAt(0).toUpperCase() %></span>
+          <% } %>
+          <b style="color: #fff;"><%= t.name %></b>
+        </td>
+        <td class="muted"><%= t.specialty %></td>
+        <td class="muted"><%= t.sort_order %></td>
+        <td>
+          <% if (t.is_active) { %>
+            <span class="badge ok">active</span>
+          <% } else { %>
+            <span class="badge warn">hidden</span>
+          <% } %>
+        </td>
+        <td>
+          <div class="row-actions">
+            <a class="btn btn-ghost btn-sm" href="/admin/trainers/<%= t.id %>/edit">Edit</a>
+            <form action="/admin/trainers/<%= t.id %>/toggle" method="post" style="display:inline;">
+              <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+              <button class="btn btn-ghost btn-sm"><%= t.is_active ? 'Hide' : 'Show' %></button>
+            </form>
+            <form action="/admin/trainers/<%= t.id %>/delete" method="post" style="display:inline;">
+              <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+              <button class="btn btn-danger btn-sm" data-confirm="Delete <%= t.name %>?">Delete</button>
+            </form>
+          </div>
+        </td>
+      </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</div>
+<% if (!trainers.length) { %>
+<div class="empty">
+  <div style="width: 44px; height: 44px; border-radius: 12px; background: rgba(204, 255, 0, 0.08); border: 1px solid rgba(204, 255, 0, 0.25); display: inline-flex; align-items: center; justify-content: center; color: var(--volt); margin-bottom: 12px;">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+  </div>
+  <p>No trainers listed yet. Add your first coach.</p>
+</div>
+<% } %>

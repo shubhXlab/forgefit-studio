@@ -1,0 +1,33 @@
+<h1><%= cls.id ? 'Edit class' : 'New class' %></h1>
+<p class="admin-sub">Classes appear on the website as soon as they're saved as active.</p>
+<div class="form-card wide" style="margin:0;max-width:none">
+<form action="<%= formAction %>" method="post" enctype="multipart/form-data">
+  <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+  <div class="field-row">
+    <div class="field"><label>Title *</label><input name="title" value="<%= cls.title || '' %>" required maxlength="120" /></div>
+    <div class="field"><label>Coach name</label><input name="trainer_name" value="<%= cls.trainer_name || '' %>" maxlength="80" /></div>
+  </div>
+  <div class="field"><label>Description</label><textarea name="description" maxlength="2000"><%= cls.description || '' %></textarea></div>
+  <div class="field-row">
+    <div class="field"><label>Schedule * <span class="hint">e.g. Mon, Wed, Fri · 7:00 AM</span></label><input name="schedule" value="<%= cls.schedule || '' %>" required maxlength="120" /></div>
+    <div class="field"><label>Level</label><select name="level"><% ['All levels','Beginner','Intermediate','Advanced'].forEach(function(l) { %><option <%= (cls.level||'All levels')===l?'selected':'' %>><%= l %></option><% }) %></select></div>
+  </div>
+  <div class="field-row">
+    <div class="field"><label>Capacity *</label><input name="capacity" type="number" min="1" max="500" value="<%= cls.capacity || 20 %>" required /></div>
+    <div class="field"><label>Duration (minutes) *</label><input name="duration_min" type="number" min="15" max="600" value="<%= cls.duration_min || 60 %>" required /></div>
+  </div>
+  <div class="field"><label>Price per session (₹) *</label><input name="price" type="number" min="0" step="1" value="<%= cls.price != null ? cls.price : 499 %>" required /></div>
+  <div class="field">
+    <label>Cover image</label>
+    <% if (cls.image) { %><p class="hint" style="margin-bottom:8px">Current: <img src="<%= cls.image %>" alt="" style="height:60px;border-radius:8px;display:inline-block;vertical-align:middle" /></p><% } %>
+    <input type="file" name="image" accept="image/jpeg,image/png,image/webp" />
+    <div class="hint">Upload a JPG/PNG/WebP (max 2 MB), or pick one from the studio gallery:</div>
+    <div class="gallery-pick">
+      <label><input type="radio" name="gallery_image" value="" <%= !cls.image || cls.image.startsWith('/uploads/') ? 'checked' : '' %> /><span class="none-opt">Keep current / none</span></label>
+      <% gallery.forEach(function(g) { %><label><input type="radio" name="gallery_image" value="<%= g %>" <%= cls.image===g?'checked':'' %> /><img src="<%= g %>" alt="" loading="lazy" /></label><% }) %>
+    </div>
+  </div>
+  <button class="btn" type="submit"><%= cls.id ? 'Save changes' : 'Create class' %></button>
+  <a class="btn btn-ghost" href="/admin/classes" style="margin-left:8px">Cancel</a>
+</form>
+</div>

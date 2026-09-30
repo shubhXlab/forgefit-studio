@@ -1,0 +1,55 @@
+<div class="wrap">
+  <div class="form-card wide">
+    <h1>Security &amp; two-factor authentication</h1>
+    <p class="form-sub">Add a second layer of protection to your account.</p>
+
+    <div class="sec-row">
+      <div>
+        <h4>Authenticator app <span class="badge <%= totpEnabled ? 'ok' : 'warn' %>"><%= totpEnabled ? 'ON' : 'OFF' %></span></h4>
+        <p>Use Google Authenticator, Authy or any TOTP app. You'll enter a 6-digit code after your password.</p>
+      </div>
+      <div>
+        <% if (totpEnabled) { %>
+          <form action="/security/totp/disable" method="post" style="display:flex;gap:8px;align-items:center">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+            <input name="password" type="password" placeholder="Password to confirm" required style="background:var(--bg2);border:1px solid var(--line);border-radius:9px;color:var(--text);padding:9px 12px;font-size:14px" />
+            <button class="btn btn-danger btn-sm" data-confirm="Turn off authenticator 2FA?">Turn off</button>
+          </form>
+        <% } else { %>
+          <form action="/security/totp/start" method="post"><input type="hidden" name="_csrf" value="<%= csrfToken %>" /><button class="btn btn-sm">Set up</button></form>
+        <% } %>
+      </div>
+    </div>
+
+    <div class="sec-row">
+      <div>
+        <h4>Email code <span class="badge <%= email2fa ? 'ok' : 'warn' %>"><%= email2fa ? 'ON' : 'OFF' %></span></h4>
+        <p>We'll email you a 6-digit code after your password at each login. Simple, no app needed.</p>
+      </div>
+      <form action="/security/email-2fa" method="post">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+        <input type="hidden" name="enable" value="<%= email2fa ? '0' : '1' %>" />
+        <button class="btn <%= email2fa ? 'btn-danger' : '' %> btn-sm"><%= email2fa ? 'Turn off' : 'Turn on' %></button>
+      </form>
+    </div>
+
+    <% if (totpEnabled) { %>
+    <div class="sec-row">
+      <div>
+        <h4>Backup codes</h4>
+        <p>You have <b style="color:var(--text)"><%= backupLeft %></b> unused backup codes. Each works once if you lose your phone.</p>
+      </div>
+      <form action="/security/backup-codes/regenerate" method="post" style="display:flex;gap:8px;align-items:center">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+        <input name="password" type="password" placeholder="Password to confirm" required style="background:var(--bg2);border:1px solid var(--line);border-radius:9px;color:var(--text);padding:9px 12px;font-size:14px" />
+        <button class="btn btn-ghost btn-sm" data-confirm="Generate new codes? Your old ones will stop working.">Regenerate</button>
+      </form>
+    </div>
+    <% } %>
+
+    <div class="sec-row">
+      <div><h4>Password</h4><p>Last changed <%= user.updated_at ? new Date(user.updated_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' }) : 'never' %>.</p></div>
+      <a class="btn btn-ghost btn-sm" href="/change-password">Change password</a>
+    </div>
+  </div>
+</div>

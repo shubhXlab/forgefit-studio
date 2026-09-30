@@ -1,0 +1,21 @@
+<div class="wrap">
+  <div class="form-card">
+    <h1>Two-factor authentication</h1>
+    <% if (method === 'totp') { %>
+      <p class="form-sub">Open your authenticator app and enter the 6-digit code for ForgeFit. You can also use one of your backup codes.</p>
+    <% } else { %>
+      <p class="form-sub">We sent a 6-digit login code to <b style="color:var(--text)"><%= email %></b>. It expires in 10 minutes.</p>
+    <% } %>
+    <form action="/2fa" method="post">
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+      <div class="field"><label for="code">Security code</label><input id="code" class="otp-input" name="code" maxlength="11" required placeholder="••••••" /></div>
+      <button class="btn btn-block" type="submit">Verify &amp; log in</button>
+    </form>
+    <% if (method === 'email') { %>
+    <hr class="divider" />
+    <form action="/login" method="get" style="text-align:center">
+      <p class="muted" style="font-size:14px;margin-bottom:10px">Code not arriving? <a href="/login" style="color:var(--volt)">Start over</a></p>
+    </form>
+    <% } %>
+  </div>
+</div>
